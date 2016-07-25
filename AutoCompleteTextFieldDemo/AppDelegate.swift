@@ -8,8 +8,9 @@
 
 import Cocoa
 
+//todo NSFormatter and NSTextFieldDelegte
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate,AutoCompleteTableViewDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate,AutoCompleteTableViewDelegate,NSTextFieldDelegate {
 
     @IBOutlet weak var window: NSWindow!
 
@@ -22,6 +23,9 @@ class AppDelegate: NSObject, NSApplicationDelegate,AutoCompleteTableViewDelegate
         // Insert code here to initialize your application
         self.textField.tableViewDelegate = self
         self.textField2.tableViewDelegate = self
+        
+        self.textField.delegate = self
+        self.textField2.delegate = self
     }
     
     func textField(textField: NSTextField, completions words: [String], forPartialWordRange charRange: NSRange, indexOfSelectedItem index: Int) -> [String] {
@@ -57,11 +61,21 @@ class AppDelegate: NSObject, NSApplicationDelegate,AutoCompleteTableViewDelegate
         }
         
         return matches
-
     }
-
+    
+    func control(control: NSControl, isValidObject obj: AnyObject) -> Bool {
+        let stationName = obj as! String
+        let isError = stationData.allStation.contains{ element in
+            return element.Name == stationName }
+        return isError
+    }
+    
     func applicationWillTerminate(aNotification: NSNotification) {
         // Insert code here to tear down your application
+    }
+    
+    func applicationShouldTerminateAfterLastWindowClosed(sender: NSApplication) -> Bool {
+        return true
     }
 
 
