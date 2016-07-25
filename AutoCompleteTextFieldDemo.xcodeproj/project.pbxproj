@@ -11,6 +11,7 @@
 		F1134A081C1BF03B00E3FB08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1134A071C1BF03B00E3FB08 /* Assets.xcassets */; };
 		F1134A0B1C1BF03B00E3FB08 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1134A091C1BF03B00E3FB08 /* MainMenu.xib */; };
 		F1134A131C1BF68900E3FB08 /* AutoCompleteTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1134A121C1BF68900E3FB08 /* AutoCompleteTextField.swift */; };
+		F131DAB61D45AD0B0022B2C0 /* station_name.js in Resources */ = {isa = PBXBuildFile; fileRef = F131DAB51D45AD0B0022B2C0 /* station_name.js */; };
 		F1D77FBE1C2B80E800457996 /* StationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D77FBD1C2B80E800457996 /* StationData.swift */; };
 /* End PBXBuildFile section */
 
@@ -21,6 +22,7 @@
 		F1134A0A1C1BF03B00E3FB08 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		F1134A0C1C1BF03B00E3FB08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = AutoCompleteTextFieldDemo/Info.plist; sourceTree = "<group>"; };
 		F1134A121C1BF68900E3FB08 /* AutoCompleteTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteTextField.swift; sourceTree = "<group>"; };
+		F131DAB51D45AD0B0022B2C0 /* station_name.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = station_name.js; path = Model/station_name.js; sourceTree = "<group>"; };
 		F1D77FBD1C2B80E800457996 /* StationData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StationData.swift; path = Model/StationData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -66,6 +68,7 @@
 		F1D77FBF1C2B80F300457996 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F131DAB51D45AD0B0022B2C0 /* station_name.js */,
 				F1D77FBD1C2B80E800457996 /* StationData.swift */,
 			);
 			name = Model;
@@ -140,6 +143,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F1134A081C1BF03B00E3FB08 /* Assets.xcassets in Resources */,
+				F131DAB61D45AD0B0022B2C0 /* station_name.js in Resources */,
 				F1134A0B1C1BF03B00E3FB08 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

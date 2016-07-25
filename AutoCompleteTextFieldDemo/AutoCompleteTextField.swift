@@ -6,12 +6,11 @@
 //  Copyright © 2015年 fancy. All rights reserved.
 //
 
-//import Foundation
 import Cocoa
 
-
-protocol AutoCompleteTableViewDelegate:NSObjectProtocol{
+@objc protocol AutoCompleteTableViewDelegate:NSObjectProtocol{
     func textField(textField:NSTextField,completions words:[String],forPartialWordRange charRange:NSRange,indexOfSelectedItem index:Int) ->[String]
+    optional func didSelectItem(selectedItem: String)
 }
 
 class AutoCompleteTableRowView:NSTableRowView{
@@ -38,9 +37,9 @@ class AutoCompleteTableRowView:NSTableRowView{
     }
 }
 
-class AutoCompleteTextField:NSTextField,NSTableViewDataSource,NSTableViewDelegate{
-    var tableViewDelegate:AutoCompleteTableViewDelegate?
-    let popOverWidth:CGFloat = 250.0
+class AutoCompleteTextField:NSTextField{
+    weak var tableViewDelegate:AutoCompleteTableViewDelegate?
+    var popOverWidth:NSNumber = 110
     let popOverPadding:CGFloat = 0.0
     let maxResults = 10
     
@@ -51,17 +50,17 @@ class AutoCompleteTextField:NSTextField,NSTableViewDataSource,NSTableViewDelegat
     override func awakeFromNib() {
         let column1 = NSTableColumn(identifier: "text")
         column1.editable = false
-        column1.width = popOverWidth - 2 * popOverPadding
+        column1.width = CGFloat(popOverWidth.floatValue) - 2 * popOverPadding
         
         let tableView = NSTableView(frame: NSZeroRect)
         tableView.selectionHighlightStyle = NSTableViewSelectionHighlightStyle.Regular
         tableView.backgroundColor = NSColor.clearColor()
         tableView.rowSizeStyle = NSTableViewRowSizeStyle.Small
-        tableView.intercellSpacing = NSMakeSize(20.0, 3.0)
+        tableView.intercellSpacing = NSMakeSize(10.0, 0.0)
         tableView.headerView = nil
         tableView.refusesFirstResponder = true
         tableView.target = self
-        tableView.doubleAction = Selector("insert:")
+        tableView.doubleAction = #selector(AutoCompleteTextField.insert(_:))
         tableView.addTableColumn(column1)
         tableView.setDelegate(self)
         tableView.setDataSource(self)
@@ -114,14 +113,14 @@ class AutoCompleteTextField:NSTextField,NSTableViewDataSource,NSTableViewDelegat
             }
             break
         
-        case 36,48: // Return or Tab
+        case 36: // Return
             if isShow{
                 self.insert(self)
-                Swift.print("insert")
                 return //skip default behavior
             }
-            Swift.print("Tab")
             
+        case 48: //Tab
+            return
         
         case 49: //Space
             if isShow {
@@ -136,12 +135,15 @@ class AutoCompleteTextField:NSTextField,NSTableViewDataSource,NSTableViewDelegat
         super.keyUp(theEvent)
         self.complete(self)
     }
-    
+
     func insert(sender:AnyObject){
         let selectedRow = self.autoCompleteTableView!.selectedRow
         let matchCount = self.matches!.count
         if selectedRow >= 0 && selectedRow < matchCount{
             self.stringValue = self.matches![selectedRow]
+            if self.tableViewDelegate!.respondsToSelector(#selector(AutoCompleteTableViewDelegate.didSelectItem(_:))){
+                self.tableViewDelegate!.didSelectItem!(self.stringValue)
+            }
         }
         self.autoCompletePopover?.close()
     }
@@ -150,10 +152,9 @@ class AutoCompleteTextField:NSTextField,NSTableViewDataSource,NSTableViewDelegat
         let lengthOfWord = self.stringValue.characters.count
         let subStringRange = NSMakeRange(0, lengthOfWord)
         
-        Swift.print("complete lengthOfWord = \(lengthOfWord) identier = \((sender as! NSTextField).identifier)")
-        
         //This happens when we just started a new word or if we have already typed the entire word
         if subStringRange.length == 0 || lengthOfWord == 0 {
+            Swift.print("complete lengthOfWord = \(lengthOfWord) identier = \((sender as! NSTextField).identifier)")
             self.autoCompletePopover?.close()
             return
         }
@@ -168,7 +169,7 @@ class AutoCompleteTextField:NSTextField,NSTableViewDataSource,NSTableViewDelegat
             
             let numberOfRows = min(self.autoCompleteTableView!.numberOfRows, maxResults)
             let height = (self.autoCompleteTableView!.rowHeight + self.autoCompleteTableView!.intercellSpacing.height) * CGFloat(numberOfRows) + 2 * 0.0
-            let frame = NSMakeRect(0, 0, popOverWidth, height)
+            let frame = NSMakeRect(0, 0, CGFloat(popOverWidth.floatValue), height)
             self.autoCompleteTableView?.enclosingScrollView?.frame = NSInsetRect(frame, popOverPadding, popOverPadding)
             self.autoCompletePopover?.contentSize = NSMakeSize(NSWidth(frame), NSHeight(frame))
             
@@ -178,21 +179,20 @@ class AutoCompleteTextField:NSTextField,NSTableViewDataSource,NSTableViewDelegat
         else{
             self.autoCompletePopover?.close()
         }
-        
     }
     
     func completionsForPartialWordRange(charRange: NSRange, indexOfSelectedItem index: Int) ->[String]{
-        if self.tableViewDelegate!.respondsToSelector(Selector("textField:completions:forPartialWordRange:indexOfSelectedItem:")){
+        if self.tableViewDelegate!.respondsToSelector(#selector(AutoCompleteTableViewDelegate.textField(_:completions:forPartialWordRange:indexOfSelectedItem:))){
             return self.tableViewDelegate!.textField(self, completions: [], forPartialWordRange: charRange, indexOfSelectedItem: index)
         }
         return []
     }
-    
-    func numberOfRowsInTableView(tableView: NSTableView) -> Int {
-        if self.matches == nil{
-            return 0
-        }
-        return self.matches!.count
+}
+
+// MARK: - NSTableViewDelegate
+extension AutoCompleteTextField:NSTableViewDelegate{
+    func tableView(tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
+        return AutoCompleteTableRowView()
     }
     
     func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
@@ -208,14 +208,20 @@ class AutoCompleteTextField:NSTextField,NSTableViewDataSource,NSTableViewDelegat
             cellView!.textField = textField
             cellView!.identifier = "MyView"
         }
-        let attrs = [NSForegroundColorAttributeName:NSColor.blackColor(),NSFontAttributeName:NSFont.systemFontOfSize(12)]
+        let attrs = [NSForegroundColorAttributeName:NSColor.blackColor(),NSFontAttributeName:NSFont.systemFontOfSize(13)]
         let mutableAttriStr = NSMutableAttributedString(string: self.matches![row], attributes: attrs)
         cellView!.textField!.attributedStringValue = mutableAttriStr
         
         return cellView
     }
-    
-    func tableView(tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
-        return AutoCompleteTableRowView()
+}
+
+// MARK: - NSTableViewDataSource
+extension AutoCompleteTextField:NSTableViewDataSource{
+    func numberOfRowsInTableView(tableView: NSTableView) -> Int {
+        if self.matches == nil{
+            return 0
+        }
+        return self.matches!.count
     }
 }
