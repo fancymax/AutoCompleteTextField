@@ -19,7 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate,AutoCompleteTableViewDelegate
     
     let stationData = StationData()
     
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
         self.textField.tableViewDelegate = self
         self.textField2.tableViewDelegate = self
@@ -28,12 +28,12 @@ class AppDelegate: NSObject, NSApplicationDelegate,AutoCompleteTableViewDelegate
         self.textField2.delegate = self
     }
     
-    func textField(textField: NSTextField, completions words: [String], forPartialWordRange charRange: NSRange, indexOfSelectedItem index: Int) -> [String] {
+    func textField(_ textField: NSTextField, completions words: [String], forPartialWordRange charRange: NSRange, indexOfSelectedItem index: Int) -> [String] {
         var matches = [String]()
         //先按简拼  再按全拼  并保留上一次的match
         for station in stationData.allStation
         {
-            if let _ = station.FirstLetter.rangeOfString(textField.stringValue, options: NSStringCompareOptions.AnchoredSearch)
+            if let _ = station.FirstLetter.range(of: textField.stringValue, options: NSString.CompareOptions.anchored)
             {
                 matches.append(station.Name)
             }
@@ -42,7 +42,7 @@ class AppDelegate: NSObject, NSApplicationDelegate,AutoCompleteTableViewDelegate
         {
             for station in stationData.allStation
             {
-                if let _ = station.Spell.rangeOfString(textField.stringValue, options: NSStringCompareOptions.AnchoredSearch)
+                if let _ = station.Spell.range(of: textField.stringValue, options: NSString.CompareOptions.anchored)
                 {
                     matches.append(station.Name)
                 }
@@ -53,7 +53,7 @@ class AppDelegate: NSObject, NSApplicationDelegate,AutoCompleteTableViewDelegate
         {
             for station in stationData.allStation
             {
-                if let _ = station.Name.rangeOfString(textField.stringValue, options: NSStringCompareOptions.AnchoredSearch)
+                if let _ = station.Name.range(of: textField.stringValue, options: NSString.CompareOptions.anchored)
                 {
                     matches.append(station.Name)
                 }
@@ -63,18 +63,18 @@ class AppDelegate: NSObject, NSApplicationDelegate,AutoCompleteTableViewDelegate
         return matches
     }
     
-    func control(control: NSControl, isValidObject obj: AnyObject) -> Bool {
+    func control(_ control: NSControl, isValidObject obj: Any?) -> Bool {
         let stationName = obj as! String
         let isError = stationData.allStation.contains{ element in
             return element.Name == stationName }
         return isError
     }
     
-    func applicationWillTerminate(aNotification: NSNotification) {
+    func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
     
-    func applicationShouldTerminateAfterLastWindowClosed(sender: NSApplication) -> Bool {
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         return true
     }
 

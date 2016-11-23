@@ -12,6 +12,8 @@
 		F1134A0B1C1BF03B00E3FB08 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1134A091C1BF03B00E3FB08 /* MainMenu.xib */; };
 		F1134A131C1BF68900E3FB08 /* AutoCompleteTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1134A121C1BF68900E3FB08 /* AutoCompleteTextField.swift */; };
 		F131DAB61D45AD0B0022B2C0 /* station_name.js in Resources */ = {isa = PBXBuildFile; fileRef = F131DAB51D45AD0B0022B2C0 /* station_name.js */; };
+		F1BE5B4E1DE528A700276BB1 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = F1BE5B4C1DE528A700276BB1 /* README.md */; };
+		F1BE5B4F1DE528A700276BB1 /* screenshot.png in Resources */ = {isa = PBXBuildFile; fileRef = F1BE5B4D1DE528A700276BB1 /* screenshot.png */; };
 		F1D77FBE1C2B80E800457996 /* StationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D77FBD1C2B80E800457996 /* StationData.swift */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +25,8 @@
 		F1134A0C1C1BF03B00E3FB08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = AutoCompleteTextFieldDemo/Info.plist; sourceTree = "<group>"; };
 		F1134A121C1BF68900E3FB08 /* AutoCompleteTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteTextField.swift; sourceTree = "<group>"; };
 		F131DAB51D45AD0B0022B2C0 /* station_name.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = station_name.js; path = Model/station_name.js; sourceTree = "<group>"; };
+		F1BE5B4C1DE528A700276BB1 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		F1BE5B4D1DE528A700276BB1 /* screenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screenshot.png; sourceTree = "<group>"; };
 		F1D77FBD1C2B80E800457996 /* StationData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StationData.swift; path = Model/StationData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -40,6 +44,8 @@
 		F11349F91C1BF03B00E3FB08 = {
 			isa = PBXGroup;
 			children = (
+				F1BE5B4C1DE528A700276BB1 /* README.md */,
+				F1BE5B4D1DE528A700276BB1 /* screenshot.png */,
 				F1134A041C1BF03B00E3FB08 /* AutoCompleteTextFieldDemo */,
 				F1134A031C1BF03B00E3FB08 /* Products */,
 			);
@@ -111,11 +117,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = fancy;
 				TargetAttributes = {
 					F1134A011C1BF03B00E3FB08 = {
 						CreatedOnToolsVersion = 7.1.1;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -145,6 +152,7 @@
 				F1134A081C1BF03B00E3FB08 /* Assets.xcassets in Resources */,
 				F131DAB61D45AD0B0022B2C0 /* station_name.js in Resources */,
 				F1134A0B1C1BF03B00E3FB08 /* MainMenu.xib in Resources */,
+				F1BE5B4F1DE528A700276BB1 /* screenshot.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,6 +165,7 @@
 			files = (
 				F1134A061C1BF03B00E3FB08 /* AppDelegate.swift in Sources */,
 				F1D77FBE1C2B80E800457996 /* StationData.swift in Sources */,
+				F1BE5B4E1DE528A700276BB1 /* README.md in Sources */,
 				F1134A131C1BF68900E3FB08 /* AutoCompleteTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -188,8 +197,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
@@ -232,8 +243,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
@@ -252,6 +265,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Release;
 		};
@@ -264,6 +278,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = fancymax.AutoCompleteTextFieldDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -276,6 +291,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = fancymax.AutoCompleteTextFieldDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

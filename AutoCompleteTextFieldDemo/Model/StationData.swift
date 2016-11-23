@@ -25,26 +25,24 @@ class Regex {
     
     init(_ pattern: String) {
         self.pattern = pattern
-        var error: NSError?
         do {
-            self.internalExpression = try NSRegularExpression(pattern: pattern, options: .CaseInsensitive)
-        } catch let error1 as NSError {
-            error = error1
+            self.internalExpression = try NSRegularExpression(pattern: pattern, options: .caseInsensitive)
+        } catch  {
             self.internalExpression = nil
         }
     }
     
-    func getMatches(input: String) -> [[String]]? {
+    func getMatches(_ input: String) -> [[String]]? {
         var res = [[String]]()
         let myRange = NSMakeRange(0, input.characters.count)
-        if let matches = self.internalExpression?.matchesInString(input, options: [], range:myRange)
+        if let matches = self.internalExpression?.matches(in: input, options: [], range:myRange)
         {
             for match in matches
             {
                 var groupMatch = [String]()
                 for i in 1..<match.numberOfRanges
                 {
-                    let rangeText = (input as NSString).substringWithRange(match.rangeAtIndex(i))
+                    let rangeText = (input as NSString).substring(with: match.rangeAt(i))
                     groupMatch.append(rangeText)
                 }
                 res.append(groupMatch)
@@ -71,8 +69,8 @@ class StationData{
         self.allStation = [Station]()
         self.allStationMap = [String:Station]()
         
-        let path = NSBundle.mainBundle().pathForResource("station_name", ofType: "js")
-        let stationInfo = try! NSString(contentsOfFile: path!, encoding: NSUTF8StringEncoding) as String
+        let path = Bundle.main.path(forResource: "station_name", ofType: "js")
+        let stationInfo = try! NSString(contentsOfFile: path!, encoding: String.Encoding.utf8.rawValue) as String
         
         if let matches = Regex("@[a-z]+\\|([^\\|]+)\\|([a-z]+)\\|([a-z]+)\\|([a-z]+)\\|").getMatches(stationInfo)
         {

@@ -1,5 +1,5 @@
 # AutoCompleteTextField
-AutoCompleteTextField for OS X(Swift)
+AutoCompleteTextField for OS X(Swift 3.0)
 
 ![demo](./screenshot.png)
 
