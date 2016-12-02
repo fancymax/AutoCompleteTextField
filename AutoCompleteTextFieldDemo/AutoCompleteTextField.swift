@@ -38,8 +38,9 @@ class AutoCompleteTableRowView:NSTableRowView{
 }
 
 class AutoCompleteTextField:NSTextField{
+    @IBInspectable var popOverWidth:CGFloat = 110.0
+    
     weak var tableViewDelegate:AutoCompleteTableViewDelegate?
-    var popOverWidth:CGFloat = 110.0
     let popOverPadding:CGFloat = 0.0
     let maxResults = 10
     
@@ -109,8 +110,8 @@ class AutoCompleteTextField:NSTextField{
         case 36: // Return
             if isShow{
                 self.insert(self)
-                return //skip default behavior
             }
+            return //skip default behavior
             
         case 48: //Tab
             if isShow{
@@ -150,7 +151,6 @@ class AutoCompleteTextField:NSTextField{
         
         //This happens when we just started a new word or if we have already typed the entire word
         if subStringRange.length == 0 || lengthOfWord == 0 {
-            Swift.print("complete lengthOfWord = \(lengthOfWord) identier = \((sender as! NSTextField).identifier)")
             self.autoCompletePopover?.close()
             return
         }
