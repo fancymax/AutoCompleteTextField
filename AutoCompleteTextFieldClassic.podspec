@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name = 'AutoCompleteTextFieldClassic'
-    s.version = '1.0.1'
+    s.version = '1.0.3'
     s.license = 'MIT'
 
     s.summary = 'AutoCompleteTextField for OS X'
